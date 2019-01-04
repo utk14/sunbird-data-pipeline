@@ -26,7 +26,7 @@ TODO
 
 ### Playbooks to run in order
 
-General ansible execute format is 
+General ansible execute format is
 
 `ansible-playbook -i inventory/sample_env/hosts <playbook.yml>`
 
@@ -49,26 +49,3 @@ General ansible execute format is
 - dp_yarn_provision.yml
 - samza_deploy.yml
 - dp_samza_telemetry_schemas.yml
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
