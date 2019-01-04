@@ -30,5 +30,45 @@ General ansible execute format is
 
 `ansible-playbook -i inventory/sample_env/hosts <playbook.yml>`
 
-- cassandra.yml
-- 
+- lpa_cassandra_provision.yml
+- postgres-provision.yml
+- es_telemetry_cluster_setup.yml
+- kibana_provision.yml
+- dp_zookeeper_provision.yml
+- dp_kafka_provision.yml
+- dp_kafka_setup.yml
+- lpa_api_provision.yml
+- lpa_secor_provision.yml
+- lpa_spark_provision.yml
+- lpa_api_deploy.yml
+- lpa_secor_deploy.yml
+- lpa_telemetry_backup_deploy.yml
+- lpa_data-products_deploy.yml
+- dp_kafka_indexer.yml
+- influxdb_backup.yml
+- dp_yarn_provision.yml
+- samza_deploy.yml
+- dp_samza_telemetry_schemas.yml
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
