@@ -24,28 +24,28 @@ You can override that in group_vars though.
 
 TODO
 
-### Playbooks to run in order
+### Install DP
 
-General ansible execute format is
+> Execute the following playbooks in order
 
-`ansible-playbook -i inventory/sample_env/hosts <playbook.yml>`
+General ansible execute format is `ansible-playbook -i inventory/sample_env/hosts <playbook.yml>`
 
-- lpa_cassandra_provision.yml
-- postgres-provision.yml
-- es_telemetry_cluster_setup.yml
-- kibana_provision.yml
-- dp_zookeeper_provision.yml
-- dp_kafka_provision.yml
-- dp_kafka_setup.yml
-- lpa_api_provision.yml
-- lpa_secor_provision.yml
-- lpa_spark_provision.yml
-- lpa_api_deploy.yml
-- lpa_secor_deploy.yml
-- lpa_telemetry_backup_deploy.yml
-- lpa_data-products_deploy.yml
-- dp_kafka_indexer.yml
-- influxdb_backup.yml
-- dp_yarn_provision.yml
-- samza_deploy.yml
-- dp_samza_telemetry_schemas.yml
+1.  lpa_cassandra_provision.yml
+2.  postgres-provision.yml
+3.  es_telemetry_cluster_setup.yml
+4.  kibana_provision.yml
+5.  dp_zookeeper_provision.yml
+6.  dp_kafka_provision.yml
+7.  dp_kafka_setup.yml
+8.  lpa_api_provision.yml
+9.  lpa_secor_provision.yml
+10.  lpa_spark_provision.yml
+11.  lpa_api_deploy.yml
+12.  lpa_secor_deploy.yml
+13.  lpa_telemetry_backup_deploy.yml
+14.  lpa_data-products_deploy.yml
+15.  dp_kafka_indexer.yml
+16.  influxdb_backup.yml
+17.  dp_yarn_provision.yml
+18.  samza_deploy.yml
+19.  dp_samza_telemetry_schemas.yml
