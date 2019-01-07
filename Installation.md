@@ -24,6 +24,21 @@ You can override that in group_vars though.
 
 TODO
 
+### Prerequisites
+
+- [ansible v2.5.0](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#latest-releases-via-pip)
+
+**Instances Required**
+
+1. analytics-api - 1 (2 cpu, 8GB Memory)
+2. Secor,Influxdb and kafka-indexer - 1 (4 cpu, 16GB Memory)
+3. Saprk - 1 (2 cpu, 8GB Memory)
+4. yarn-master - 1 (2 cpu, 8GB Memory)
+5. yarn-slave - 3 (2 cpu, 8GB Memory)
+6. kafka and zookeeper - 1 (2 cpu, 8GB Memory)
+7. elasticsearch - 1 ( 2 cpu, 4GB Memory)
+8. cassandra - 1 ( 2 cpu, 4GB Memory)
+
 ### Install DP
 
 > Execute the following playbooks in order
