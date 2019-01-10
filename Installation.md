@@ -22,7 +22,17 @@ You can override that in group_vars though.
 
 ### Variables
 
-TODO
+Mandatory variables to update
+
+| Variable | Definition |
+| ---  | --- |
+| env | to denote environment |
+| azure_storage_secret | Azure stoage secrets for blob |
+| azure_account_name | Azure account name which you use |
+| azure_public_container | Name of the container you store data |
+| azure_backup_account_name | Name of the container to store backup |
+| azure_backup_storage_secret | Secret key for the storage account to store backup |
+| secrets_path | Ansible vault secrets file path |
 
 ### Prerequisites
 
