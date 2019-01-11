@@ -33,6 +33,9 @@ Mandatory variables to update
 | azure_backup_account_name | Name of the container to store backup |
 | azure_backup_storage_secret | Secret key for the storage account to store backup |
 | secrets_path | Ansible vault secrets file path |
+| postgres:db_password | password for postgres |
+
+> All values start with `vault_` in group_vars are passwords/keys you'll have to update
 
 ### Prerequisites
 
