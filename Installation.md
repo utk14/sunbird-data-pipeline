@@ -72,8 +72,8 @@ General ansible execute format is `ansible-playbook -i inventory/sample_env/host
 12.  lpa_secor_deploy.yml
 13.  lpa_telemetry_backup_deploy.yml
 14.  lpa_data-products_deploy.yml
-15.  dp_kafka_indexer.yml
-16.  influxdb_backup.yml
-17.  dp_yarn_provision.yml
-18.  samza_deploy.yml
-19.  dp_samza_telemetry_schemas.yml
+15.  dp_yarn_provision.yml
+16.  dp_samza_telemetry_schemas.yml
+17.  samza_deploy.yml
+18.  influxdb_provision.yml
+19.  dp_kafka_indexer.yml
