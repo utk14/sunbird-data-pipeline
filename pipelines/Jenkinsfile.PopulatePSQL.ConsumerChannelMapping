@@ -1,0 +1,59 @@
+@Library('deploy-conf') _
+node() {
+    try {
+        String ANSI_GREEN = "\u001B[32m"
+        String ANSI_NORMAL = "\u001B[0m"
+        String ANSI_BOLD = "\u001B[1m"
+        String ANSI_RED = "\u001B[31m"
+        String ANSI_YELLOW = "\u001B[33m"
+
+        if (params.size() == 0){
+            envDir = sh(returnStdout: true, script: "echo $JOB_NAME").split('/')[-2].trim()
+            properties([[$class: 'RebuildSettings', autoRebuild: false, rebuildDisabled: false], parameters([
+                    choice(choices: ['GitHub', 'Local'], description: '<font color=teal size=2>Choose the ansible inventory source</font>', name: 'inventory_source'),
+                    string(defaultValue: "${WORKSPACE}/private/ansible/inventories/${envDir}", description: '<font color=teal size=2>Please sepecify the full path to the inventory directory. The default value is $WORKSPACE/private/ansible/env. Here env is the previous directory of the job.</font>', name: 'inventory_path', trim: false),
+                    string(defaultValue: 'id', description: '<font color=teal size=2>mention the consumer ID.</font>', name: 'Consumer_id', trim: false),
+                    string(defaultValue: 'channel_id', description: '<font color=teal size=2>Channel ID to map with the Consumer ID.</font>', name: 'Channel_id', trim: false),
+                    choice(choices: ['1', '0'], description: '<font color=teal size=2> 1 - to activate 0 - to make it inactive</font>', name: 'status'),
+                    string(defaultValue: 'analytics-team', description: '<font color=teal size=2>created by.</font>', name: 'Created_by', trim: false)])])
+            ansiColor('xterm') {
+                println (ANSI_BOLD + ANSI_GREEN + '''\
+                        First run of the job. Parameters created. Stopping the current build.
+                        Please trigger new build and provide parameters if required.
+                        '''.stripIndent().replace("\n"," ") + ANSI_NORMAL)
+            }
+            currentBuild.result = 'SUCCESS'
+            return "first run"
+        }
+
+        stage('checkout public repo') {
+            cleanWs()
+            checkout scm
+        }
+
+        ansiColor('xterm') {
+            stage('deploy'){
+                values = [:]
+                currentWs = sh(returnStdout: true, script: 'pwd').trim()
+                values.put('currentWs', currentWs)
+                ansiblePlaybook = "${currentWs}/devops/postgres-provision.yml"
+                ansibleExtraArgs = "--connection=local --extra-vars \"consumer_id=${params.Consumer_id} channel=${params.Channel_id} status=${params.status} created_by=${params.Created_by}\""
+                values.put('ansiblePlaybook', ansiblePlaybook)
+                values.put('ansibleExtraArgs', ansibleExtraArgs)
+                println values
+//                    ansible_playbook_run(values)
+                
+
+                ansiblePlaybook = "${currentWs}/devops/lpa_api_deploy.yml"
+                ansibleExtraArgs = "--tags refresh-cache"
+                values.put('ansiblePlaybook', ansiblePlaybook)
+                values.put('ansibleExtraArgs', ansibleExtraArgs)
+                println values
+//                    ansible_playbook_run(values)
+            }
+        }
+    }
+    catch (err) {
+        throw err
+    }
+}
