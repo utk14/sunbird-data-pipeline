@@ -1,0 +1,5 @@
+---
+- hosts: dp-yarn-master
+  roles:
+    - samza-jobs-alert
+  become: yes

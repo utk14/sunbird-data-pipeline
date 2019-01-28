@@ -1,0 +1,7 @@
+---
+
+- hosts: dp-yarn-slave
+  roles: 
+    - bootstrap
+    - samza-logs-upload
+  become: yes

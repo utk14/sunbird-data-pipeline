@@ -8,8 +8,3 @@
 
 - name: copy the slack script
   template: src=samza_slack  dest=/usr/local/bin/samza_slack.sh mode=755
-
-- name: copy the backup script to yarn slaves
-  template: src=upload_samza_logs dest="{{script_path}}/upload_samza_logs.sh" mode=755
-  tags:
-   - upload

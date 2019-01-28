@@ -1,7 +1,8 @@
 #!/bin/sh
 
-MONIT_GROUP="[u'{{ env }}']"
-MONIT_IP="{{ __yarn_host__ }}"
+MONIT_GROUP="[u'influxdb']"
+MONIT_IP="{{ influxdb }}"
+MONIT_DATE=`date`
 COLOR=$1
 DESCRIPTION=$2
 /usr/bin/curl \
@@ -9,7 +10,7 @@ DESCRIPTION=$2
     -s \
     --data-urlencode "payload={ \
         \"channel\": \"#{{ samza_slack_channel }}\", \
-        \"username\": \"Samza-Monit-{{ env }}\", \
+        \"username\": \"Dataproducts-{{ env }}\", \
         \"pretext\": \"$MONIT_IP | $MONIT_GROUP | $MONIT_DATE\", \
         \"color\": \"$COLOR\", \
         \"icon_emoji\": \":bangbang:\", \
