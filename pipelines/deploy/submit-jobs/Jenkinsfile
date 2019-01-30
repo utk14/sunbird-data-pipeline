@@ -19,7 +19,7 @@ node() {
                 module = sh(returnStdout: true, script: "echo $JOB_NAME").split('/')[-2].trim()
                 jobName = sh(returnStdout: true, script: "echo $JOB_NAME").split('/')[-1].trim()
                 currentWs = sh(returnStdout: true, script: 'pwd').trim()
-                ansiblePlaybook = "${currentWs}/devops/lpa_submit_all_jobs.yml"
+                ansiblePlaybook = "${currentWs}/ansible/lpa_submit_all_jobs.yml"
                 ansibleExtraArgs = "--extra-vars \"pause_min=${params.pause_min}\""
                 values.put('currentWs', currentWs)
                 values.put('env', envDir)

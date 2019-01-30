@@ -20,7 +20,7 @@ node() {
                 module = sh(returnStdout: true, script: "echo $JOB_NAME").split('/')[-2].trim()
                 jobName = sh(returnStdout: true, script: "echo $JOB_NAME").split('/')[-1].trim()
                 currentWs = sh(returnStdout: true, script: 'pwd').trim()
-                ansiblePlaybook = "${currentWs}/devops/lpa_fetch_logs.yml"
+                ansiblePlaybook = "${currentWs}/ansible/lpa_fetch_logs.yml"
                 ansibleExtraArgs = "--limit ${params.instance_name} --tags ${params.action} -vvv"
                 values.put('currentWs', currentWs)
                 values.put('env', envDir)
