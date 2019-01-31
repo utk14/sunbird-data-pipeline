@@ -1,6 +1,6 @@
 - hosts: kafka-indexer
   vars_files:
-       - "{{inventory_dir}}/secrets/dp_secrets.yml"
+       - "{{inventory_dir}}/secrets.yml"
   pre_tasks:
     - name: Create ecosytem group
       become: yes
