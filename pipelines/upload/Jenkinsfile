@@ -21,6 +21,7 @@ node() {
             archiveArtifacts artifacts: 'metadata.json', onlyIfSuccessful: true
             currentBuild.description = "${artifact_version}"
         }
+   }
     catch (err) {
         currentBuild.result = "FAILURE"
         throw err
