@@ -28,7 +28,7 @@ node() {
                 values.put('ansiblePlaybook', ansiblePlaybook)
                 values.put('ansibleExtraArgs', ansibleExtraArgs)
                 println values
-//                    ansible_playbook_run(values)
+                ansible_playbook_run(values)
                 
 
                 ansiblePlaybook = "${currentWs}/ansible/lpa_api_deploy.yml"
@@ -36,7 +36,7 @@ node() {
                 values.put('ansiblePlaybook', ansiblePlaybook)
                 values.put('ansibleExtraArgs', ansibleExtraArgs)
                 println values
-//                    ansible_playbook_run(values)
+                ansible_playbook_run(values)
             }
         }
     }
