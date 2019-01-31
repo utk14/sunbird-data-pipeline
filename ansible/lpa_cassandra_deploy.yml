@@ -1,4 +1,4 @@
-- hosts: dp-cassandra
+- hosts: cassandra
   become: yes
   roles:
     - cassandra-deploy

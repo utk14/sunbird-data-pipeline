@@ -12,7 +12,7 @@
     - analytics-api-fetch-logs
   serial: 1
 
-- hosts: dp-cassandra
+- hosts: cassandra
   roles:
     - cassandra-fetch-logs
   serial: 1
