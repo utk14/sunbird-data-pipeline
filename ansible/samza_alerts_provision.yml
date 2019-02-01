@@ -1,5 +1,5 @@
 ---
-- hosts: dp-yarn-master
+- hosts: yarn-master
   roles:
     - samza-jobs-alert
   become: yes

@@ -1,5 +1,5 @@
 ---
-- hosts: dp-yarn-slave
+- hosts: yarn-slave
   vars_files:
    - ['{{inventory_dir}}/secrets.yml']
   tasks:
