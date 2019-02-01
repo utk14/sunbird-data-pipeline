@@ -13,7 +13,6 @@
     - java
     - rvm-ansible
     - ep_logstash
-    - data_router
   tags:
     - kafka-indexer
     - stop-telemetry-pump
