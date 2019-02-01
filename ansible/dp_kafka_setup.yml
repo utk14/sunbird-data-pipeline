@@ -1,6 +1,5 @@
 ---
-- hosts: "{{ host }}"
-  remote_user: "{{ ecosystem_user }}"
+- hosts: processing-cluster-kafka
   become: yes
   pre_tasks:
     - name: Registering kafka_id
