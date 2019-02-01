@@ -1,6 +1,6 @@
 ---
 - name: "Copy validation schema files to Yarn Slaves"
-  hosts: "dp-yarn-slave"
+  hosts: "yarn-slave"
   become: yes
   tasks:
    - name: cloning the telemetry schema repo

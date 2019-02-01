@@ -1,6 +1,6 @@
 ---
 
-- hosts: dp-yarn-slave
+- hosts: yarn-slave
   roles: 
     - bootstrap
     - samza-logs-upload

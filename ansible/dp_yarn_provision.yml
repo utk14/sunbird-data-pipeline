@@ -1,12 +1,12 @@
 ---
-- hosts: dp-yarn
+- hosts: yarn
   gather_facts: false
   become: true
   tasks:
     - name: Installaing python
       raw: bash -c "test -e /usr/bin/python" || (apt update && apt install python -y)
 
-- hosts: dp-yarn
+- hosts: yarn
   become: yes
   vars_files:
     - "{{inventory_dir}}/secrets.yml"
@@ -24,7 +24,7 @@
         shell: /bin/bash
 
 - name: Install samza job server
-  hosts: "dp-yarn-master"
+  hosts: "yarn-master"
   become: yes
   vars_files:
     - "{{inventory_dir}}/secrets.yml"
@@ -34,7 +34,7 @@
     - samza-job-server
 
 - name: Install java on all yarn slaves
-  hosts: "dp-yarn-slave"
+  hosts: "yarn-slave"
   become: yes
   vars_files:
     - "{{inventory_dir}}/secrets.yml"

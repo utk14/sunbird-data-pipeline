@@ -1,11 +1,11 @@
 ---
 
-- hosts: dp-yarn-slave
+- hosts: yarn-slave
   roles: 
     - samza_monitor_utilities
   become: yes
  
-- hosts: dp-yarn-master
+- hosts: yarn-master
   roles:
     - samza_monitor_utilities
   become: yes
