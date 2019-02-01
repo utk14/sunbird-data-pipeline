@@ -11,6 +11,7 @@
       tags: kafka-indexer
   roles:
     - java
+      #    - rvm-ansible
     - ep_logstash
   tags:
     - kafka-indexer
