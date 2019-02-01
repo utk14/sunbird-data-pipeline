@@ -13,15 +13,15 @@ node() {
         }
 
             ansiColor('xterm') {
-                 def values = lp_dp_params()
+                def values = lp_dp_params()
                 stage('get artifact') {
                     currentWs = sh(returnStdout: true, script: 'pwd').trim()
                     artifact = values.artifact_name + ":" + values.artifact_version
                     values.put('currentWs', currentWs)
                     if (params.artifact_source == "ArtifactRepo") {
                         println(ANSI_BOLD + ANSI_YELLOW + '''\
-                    Option chosen is ArtifactRepo, ignoring any previously copied artifacts and new artifacts will be downloaded from remote source
-                    '''.stripIndent().replace("\n", " ") + ANSI_NORMAL)
+                        Option chosen is ArtifactRepo, ignoring any previously copied artifacts and new artifacts will be downloaded from remote source
+                        '''.stripIndent().replace("\n", " ") + ANSI_NORMAL)
                         ansiblePlaybook = "${currentWs}/ansible/artifacts-download.yml"
                         ansibleExtraArgs = """\
                                --extra-vars "artifact=${artifact}
@@ -34,8 +34,8 @@ node() {
                     }
                     else{
                         println(ANSI_BOLD + ANSI_YELLOW + '''\
-                    Option chosen is Local, using the artifacts copied
-                    '''.stripIndent().replace("\n", " ") + ANSI_NORMAL)
+                        Option chosen is Local, using the artifacts copied
+                        '''.stripIndent().replace("\n", " ") + ANSI_NORMAL)
                     }
                 }
                 stage('deploy artifact'){
