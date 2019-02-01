@@ -40,7 +40,7 @@ node() {
                 stage('deploy artifact'){
                     sh """
                        unzip ${artifact}
-                       mv secor-*.tar.gz ansible
+                       mv secor-*.tar.gz ansible/artifacts/target
                     """
                     ansiblePlaybook = "${currentWs}/ansible/lpa_secor_deploy.yml"
                     ansibleExtraArgs = ""
