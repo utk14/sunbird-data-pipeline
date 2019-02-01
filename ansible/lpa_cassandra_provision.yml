@@ -1,4 +1,4 @@
-- hosts: dp-cassandra 
+- hosts: cassandra 
   # Install cassandra
   become: yes
   roles:
