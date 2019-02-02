@@ -73,4 +73,4 @@
     with_items:
       - scala-compiler.jar
       - scala-library.jar
-  delgate_to: "{{node}}"
+  delegate_to: "{{slave|default(inventory_hostname)}}"
