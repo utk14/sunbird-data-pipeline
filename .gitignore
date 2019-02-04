@@ -1,6 +1,5 @@
 *.log
 .DS_Store
-*.tgz
 *.local
 */reports/*
 backups/
@@ -9,6 +8,7 @@ logs/
 tasks/.bundle/*
 tasks/vendor/*
 database.yml
+*.tgz
 .idea
 tmp/
 kibana-auth/node_modules/

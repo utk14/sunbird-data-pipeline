@@ -19,8 +19,8 @@ node() {
                 module = sh(returnStdout: true, script: "echo $JOB_NAME").split('/')[-2].trim()
                 jobName = sh(returnStdout: true, script: "echo $JOB_NAME").split('/')[-1].trim()
                 currentWs = sh(returnStdout: true, script: 'pwd').trim()
-                ansiblePlaybook = "${currentWs}/ansible/dp_samza_telemetry_schemas.yml"
-                ansibleExtraArgs = "--extra-vars \"schema_repo_version=${params.schema_repo_version}\" --vault-password-file /home/ops/vault"
+                ansiblePlaybook = "${currentWs}/ansible/es_restore.yml"
+                ansibleExtraArgs = "--extra-vars \"host=${params.host} SNAPSHOT_NUMBER=${params.SNAPSHOT_NUMBER}\""
                 values.put('currentWs', currentWs)
                 values.put('env', envDir)
                 values.put('module', module)
