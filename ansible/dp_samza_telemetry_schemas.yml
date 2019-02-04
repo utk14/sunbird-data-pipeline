@@ -7,7 +7,7 @@
      git:
        repo: "{{schema_repo_url}}"
        dest: "{{telemetry_schema_directory}}"
-       version: "{{version}}"
+       version: "{{schema_repo_version}}"
        force: yes
    - name: Create schema directory
      file: path={{telemetry_schema_directory}} owner=hduser group=hadoop recurse=yes state=directory
