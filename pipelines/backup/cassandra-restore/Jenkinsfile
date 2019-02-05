@@ -7,7 +7,6 @@ node() {
         String ANSI_RED = "\u001B[31m"
         String ANSI_YELLOW = "\u001B[33m"
 
-
         stage('checkout public repo') {
             cleanWs()
             checkout scm
@@ -20,8 +19,8 @@ node() {
                 module = sh(returnStdout: true, script: "echo $JOB_NAME").split('/')[-2].trim()
                 jobName = sh(returnStdout: true, script: "echo $JOB_NAME").split('/')[-1].trim()
                 currentWs = sh(returnStdout: true, script: 'pwd').trim()
-                ansiblePlaybook = "${currentWs}/ansible/cassandra-backup.yml"
-                ansibleExtraArgs = "--extra-vars \"remote=${params.remote} data_dir=${params.data_dir}\""
+                ansiblePlaybook = "${currentWs}/ansible/cassandra-restore.yml"
+                ansibleExtraArgs = "--extra-vars  \"remote=${params.remote} artifact_version=${params.artifact_version}\""
                 values.put('currentWs', currentWs)
                 values.put('env', envDir)
                 values.put('module', module)
@@ -32,6 +31,7 @@ node() {
                 ansible_playbook_run(values)
             }
         }
+    }
     catch (err) {
         throw err
     }

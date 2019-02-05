@@ -7,4 +7,4 @@
     AZURE_STORAGE_KEY: "{{ azure_account_key }}"
 
   roles:
-   - cassandra-backup
+   - cassandra-restore
