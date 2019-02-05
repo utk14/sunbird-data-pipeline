@@ -1,3 +1,4 @@
+package Deploy
 
 @Library('deploy-conf') _
 node() {
@@ -20,19 +21,12 @@ node() {
                 module = sh(returnStdout: true, script: "echo $JOB_NAME").split('/')[-2].trim()
                 jobName = sh(returnStdout: true, script: "echo $JOB_NAME").split('/')[-1].trim()
                 currentWs = sh(returnStdout: true, script: 'pwd').trim()
-                ansiblePlaybook = "${currentWs}/ansible/es_telemetry_cluster_setup.yml"
+                ansiblePlaybook = "${currentWs}/ansible/postgresql-restore.yml"
                 ansibleExtraArgs = "--vault-password-file /home/ops/vault"
                 values.put('currentWs', currentWs)
                 values.put('env', envDir)
                 values.put('module', module)
                 values.put('jobName', jobName)
-                values.put('ansiblePlaybook', ansiblePlaybook)
-                values.put('ansibleExtraArgs', ansibleExtraArgs)
-                println values
-                ansible_playbook_run(values)
-                
-                ansiblePlaybook = "${currentWs}/ansible/es_azure_plugin.yml"
-                ansibleExtraArgs = "--vault-password-file /home/ops/vault"
                 values.put('ansiblePlaybook', ansiblePlaybook)
                 values.put('ansibleExtraArgs', ansibleExtraArgs)
                 println values

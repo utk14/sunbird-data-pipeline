@@ -1,8 +1,8 @@
-- hosts: "{{ remote }}"
+- hosts: postgresql-restore
   become: yes
   vars_files:
     - ['{{inventory_dir}}/secrets.yml']
   roles:
-    - es-azure-snapshot
+    - postgresql-restore
   tags:
-    - es_backup
+    - postgresql-restore
