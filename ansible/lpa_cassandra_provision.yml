@@ -4,4 +4,3 @@
   roles:
     - analytics-bootstrap-always
     - cassandra-3.7.0
-    - cassandra-deploy
