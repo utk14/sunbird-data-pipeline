@@ -1,4 +1,5 @@
 ---
+
 - name: Link /opt/kafka to the right version
   file: path=/opt/kafka state=link src=/opt/kafka_{{kafka_scala_version}}-{{kafka_version}} owner={{kafka_user}} group={{kafka_group}}
 

@@ -1,7 +1,7 @@
 ---
 - include: stop.yml
   when: run_mode == 'Stop'
-
+  
 - name: setup group
   group: name={{kafka_group}} system=yes
 
