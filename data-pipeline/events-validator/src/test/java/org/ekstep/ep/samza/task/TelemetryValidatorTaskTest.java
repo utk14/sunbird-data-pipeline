@@ -15,7 +15,6 @@ import org.apache.samza.system.SystemStream;
 import org.apache.samza.task.MessageCollector;
 import org.apache.samza.task.TaskContext;
 import org.apache.samza.task.TaskCoordinator;
-import org.ekstep.ep.samza.fixtures.EventFixture;
 import org.ekstep.ep.samza.fixtures.TelemetryV3;
 import org.junit.Before;
 import org.junit.Test;
