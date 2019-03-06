@@ -16,12 +16,12 @@
 
 
     <groupId>org.ekstep.ecosystem.jobs</groupId>
-    <artifactId>events-validator</artifactId>
+    <artifactId>druid-events-validator</artifactId>
     <version>0.0.1</version>
     <packaging>jar</packaging>
-    <name>Telemetry and Summary Events Validator</name>
+    <name>druid-events-validator</name>
     <description>
-        Validating Events Against Schema
+        Validating DeNormalised Events Against Schema
     </description>
 
     <dependencies>

@@ -5,7 +5,7 @@ import org.apache.samza.config.Config;
 
 public class TelemetryValidatorConfig {
 
-    private final String JOB_NAME = "EventsValidator";
+    private final String JOB_NAME = "DruidEventsValidator";
     private String telemetrySchemaPath;
     private String summarySchemaPath;
     private String successTopic;
@@ -20,8 +20,8 @@ public class TelemetryValidatorConfig {
         malformedTopic = config.get("output.malformed.topic.name", "telemetry.malformed");
         metricsTopic = config.get("output.metrics.topic.name", "telemetry.pipeline_metrics");
         defaultChannel = config.get("default.channel", "org.sunbird");
-        telemetrySchemaPath = config.get("telemetry.schema.path", "src/test/resources/druid/telemetry");
-        summarySchemaPath = config.get("summary.schema.path", "src/test/resources/druid/summary");
+        telemetrySchemaPath = config.get("telemetry.schema.path", "src/main/resources/schemas/telemetry");
+        summarySchemaPath = config.get("summary.schema.path", "src/main/resources/schemas/summary");
 
     }
 

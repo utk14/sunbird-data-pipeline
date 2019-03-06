@@ -28,8 +28,17 @@
                 <include>NOTICE*</include>
             </includes>
         </fileSet>
+        <fileSet>
+            <directory>${basedir}/src/main/resources/schemas</directory>
+            <outputDirectory>src/main/resources/schemas</outputDirectory>
+        </fileSet>
     </fileSets>
     <files>
+        <!--<file>-->
+            <!--<source>${basedir}/src/main/resources/schemas/summary/1.0/cdata.json</source>-->
+            <!--<outputDirectory>resources</outputDirectory>-->
+        <!--</file>-->
+
         <file>
             <source>${basedir}/src/main/resources/log4j.xml</source>
             <outputDirectory>lib</outputDirectory>
@@ -37,7 +46,7 @@
         <!-- filtered=true, so we do variable expansion so the yarn package path
           always points to the correct spot on any machine -->
         <file>
-            <source>${basedir}/src/main/config/events-validator.properties</source>
+            <source>${basedir}/src/main/config/druid-events-validator.properties</source>
             <outputDirectory>config</outputDirectory>
             <filtered>true</filtered>
         </file>
@@ -59,7 +68,7 @@
                 <include>org.apache.samza:samza-yarn_2.10</include>
                 <include>org.apache.samza:samza-kv-rocksdb_2.10</include>
                 <include>org.apache.samza:samza-log4j</include>
-                <include>org.ekstep.ecosystem.jobs:events-validator</include>
+                <include>org.ekstep.ecosystem.jobs:druid-events-validator</include>
                 <include>org.slf4j:slf4j-log4j12</include>
                 <include>org.apache.kafka:kafka_2.10</include>
                 <include>org.apache.hadoop:hadoop-hdfs</include>
