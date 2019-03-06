@@ -15,7 +15,6 @@ public class TelemetryValidatorConfig {
     private String metricsTopic;
 
     public TelemetryValidatorConfig(Config config) {
-        System.out.println("Config init:" + config);
         successTopic = config.get("output.success.topic.name", "telemetry.denorm.valid");
         failedTopic = config.get("output.failed.topic.name", "telemetry.denorm.failed");
         malformedTopic = config.get("output.malformed.topic.name", "telemetry.malformed");
@@ -23,9 +22,7 @@ public class TelemetryValidatorConfig {
         defaultChannel = config.get("default.channel", "org.sunbird");
         telemetrySchemaPath = config.get("telemetry.schema.path", "src/test/resources/druid/telemetry");
         summarySchemaPath = config.get("summary.schema.path", "src/test/resources/druid/summary");
-        /*System.out.println("telemetrySchemaPath" + telemetrySchemaPath);
-        System.out.println("summarySchemaPath" + summarySchemaPath);
-        System.out.println("defaultChannel" + defaultChannel);*/
+
     }
 
     public String successTopic() {

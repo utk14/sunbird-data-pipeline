@@ -10,7 +10,6 @@ import org.ekstep.ep.samza.domain.Event;
 import org.ekstep.ep.samza.task.TelemetryValidatorConfig;
 import org.ekstep.ep.samza.task.TelemetryValidatorSink;
 import org.ekstep.ep.samza.task.TelemetryValidatorSource;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.fge.jackson.JsonLoader;
 import com.github.fge.jsonschema.core.report.ProcessingReport;
@@ -33,13 +32,9 @@ public class TelemetryValidatorService {
             event = source.getEvent();
             String telemetrySchemaFilePath = MessageFormat.format("{0}/{1}/{2}", config.telemetrySchemaPath(), event.version(), event.schemaName());
             String summaryEventSchemaFilepath = MessageFormat.format("{0}/{1}/{2}", config.summarySchemaPath(), event.version(), event.schemaName());
-
             schemaFile = event.isSummaryEvent() ? summaryEventSchemaFilepath : telemetrySchemaFilePath;
             File schemaFilePath = new File(schemaFile);
-            System.out.println("schemaFilePath" + schemaFilePath);
-            System.out.println("Is File Exists" + schemaFilePath.exists());
             if (!schemaFilePath.exists()) {
-                System.out.println("Events"+ event);
                 LOGGER.info("SCHEMA DOES NOT FOUND", schemaFile);
                 LOGGER.info("SKIP PROCESSING: SENDING TO SUCCESS", event.mid());
                 event.markSkipped();
@@ -51,18 +46,17 @@ public class TelemetryValidatorService {
             JsonSchema jsonSchema = jsonSchemaFactory.getJsonSchema(schemaJson);
             ProcessingReport report = jsonSchema.validate(eventJson);
             if (report.isSuccess()) {
-                System.out.println("Validation Success");
                 LOGGER.info("VALIDATION SUCCESS", event.mid());
                 event.markSuccess();
                 event.updateDefaults(config);
                 sink.toSuccessTopic(event);
             } else {
-                System.out.println("validation error" + report.toString());
+                String fieldName = this.getInvalidFieldName(report.toString());
                 LOGGER.error(null, "VALIDATION FAILED: " + report.toString());
-                sink.toFailedTopic(event, "validation failed");
+                sink.toFailedTopic(event, "Invalid field:" + fieldName);
             }
         } catch (JsonSyntaxException e) {
-            System.out.println("Catch error" + source.getMessage());
+            System.out.println("Catch error" + e);
             LOGGER.error(null, "INVALID EVENT: " + source.getMessage());
             sink.toMalformedEventsTopic(source.getMessage());
         } catch (Exception e) {
@@ -71,5 +65,12 @@ public class TelemetryValidatorService {
                     event), e);
             sink.toErrorTopic(event, e.getMessage());
         }
+    }
+
+    private String getInvalidFieldName(String errorInfo) {
+        String[] message = errorInfo.split("reports:");
+        String[] fields = message[1].split(",");
+        String pointer[] = fields[3].split("\"pointer\":");
+        return pointer[1].substring(0, pointer[1].length() - 1);
     }
 }
