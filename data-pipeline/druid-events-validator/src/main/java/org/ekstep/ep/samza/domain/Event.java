@@ -81,17 +81,17 @@ public class Event {
 
     public void markSuccess() {
         telemetry.addFieldIfAbsent("flags", new HashMap<String, Boolean>());
-        telemetry.add("flags.tv_processed", true);
+        telemetry.add("flags.dv_processed", true);
         telemetry.add("type", "events");
     }
 
     public void markFailure(String error, TelemetryValidatorConfig config) {
         telemetry.addFieldIfAbsent("flags", new HashMap<String, Boolean>());
-        telemetry.add("flags.tv_processed", false);
+        telemetry.add("flags.dv_processed", false);
 
         telemetry.addFieldIfAbsent("metadata", new HashMap<String, Object>());
         if (null != error) {
-            telemetry.add("metadata.tv_error", error);
+            telemetry.add("metadata.dv_error", error);
             telemetry.add("metadata.src", config.jobName());
         }
 
@@ -99,7 +99,7 @@ public class Event {
 
     public void markSkipped() {
         telemetry.addFieldIfAbsent("flags", new HashMap<String, Boolean>());
-        telemetry.add("flags.tv_skipped", true);
+        telemetry.add("flags.dv_skipped", true);
     }
 
     public void updateDefaults(TelemetryValidatorConfig config) {

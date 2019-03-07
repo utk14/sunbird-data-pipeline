@@ -24,7 +24,7 @@ import org.mockito.Mockito;
 public class SummaryValidatorTaskTest {
 
     private static final String SUCCESS_TOPIC = "telemetry.denorm.valid";
-    private static final String FAILED_TOPIC = "telemetry.denorm.failed";
+    private static final String FAILED_TOPIC = "telemetry.failed";
     private static final String MALFORMED_TOPIC = "telemetry.malformed";
     private static final String TELEMETRY_SCHEMA_PATH = "src/main/resources/schemas/telemetry";
     private static final String SUMMARY_SCHEMA_PATH = "src/main/resources/schemas/summary";
