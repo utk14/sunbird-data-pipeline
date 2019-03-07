@@ -42,7 +42,7 @@
     },
     "mem": {
       "id": "http://api.ekstep.org/telemetry/devicedata/mem",
-      "type": "number"
+      "type": "string"
     },
     "idisk": {
       "id": "http://api.ekstep.org/telemetry/devicedata/idisk",
@@ -66,7 +66,7 @@
     },
     "sims": {
       "id": "http://api.ekstep.org/telemetry/devicedata/sims",
-      "type": "number"
+      "type": "string"
     },
     "iso3166statecode": {
       "id": "http://api.ekstep.org/telemetry/devicedata/iso3166statecode",
