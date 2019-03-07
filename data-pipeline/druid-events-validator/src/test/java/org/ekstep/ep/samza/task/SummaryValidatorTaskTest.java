@@ -52,10 +52,8 @@ public class SummaryValidatorTaskTest {
         when(configMock.get("output.malformed.topic.name", MALFORMED_TOPIC)).thenReturn(MALFORMED_TOPIC);
         when(configMock.get("telemetry.schema.path", TELEMETRY_SCHEMA_PATH)).thenReturn(TELEMETRY_SCHEMA_PATH);
         when(configMock.get("summary.schema.path", SUMMARY_SCHEMA_PATH)).thenReturn(SUMMARY_SCHEMA_PATH);
-        when(configMock.get("default.channel", "org.sunbird")).thenReturn("org.sunbird");
         when(metricsRegistry.newCounter(anyString(), anyString())).thenReturn(counter);
         when(contextMock.getMetricsRegistry()).thenReturn(metricsRegistry);
-        System.out.println("configMock.get(\"telemetry.schema.path\");" + configMock.get("output.success.topic.name"));
         telemetryValidatorTask = new TelemetryValidatorTask(configMock, contextMock);
     }
 
@@ -79,58 +77,6 @@ public class SummaryValidatorTaskTest {
         telemetryValidatorTask.process(envelopeMock, collectorMock, coordinatorMock);
         verify(collectorMock).send(argThat(validateOutputTopic(envelopeMock.getMessage(), FAILED_TOPIC)));
     }
-
-
-
-//
-//    @Test
-//    public void shouldSendEventToFaildTopicIfInvalidDeviceData_CASE1() throws Exception {
-//        stub(envelopeMock.getMessage()).toReturn(TelemetryV3.INVALID_DEVICEDATA_CASE_1);
-//        telemetryValidatorTask.process(envelopeMock, collectorMock, coordinatorMock);
-//        verify(collectorMock).send(argThat(validateOutputTopic(envelopeMock.getMessage(), FAILED_TOPIC)));
-//    }
-//
-//    @Test
-//    public void shouldSendEventToFaildTopicIfInvalidDeviceData_CASE2() throws Exception {
-//        stub(envelopeMock.getMessage()).toReturn(TelemetryV3.INVALID_DEVICEDATA_CASE_2);
-//        telemetryValidatorTask.process(envelopeMock, collectorMock, coordinatorMock);
-//        verify(collectorMock).send(argThat(validateOutputTopic(envelopeMock.getMessage(), FAILED_TOPIC)));
-//    }
-//
-//    @Test
-//    public void shouldSendEventToFaildTopicIfInvalidDeviceData_CASE3() throws Exception {
-//        stub(envelopeMock.getMessage()).toReturn(TelemetryV3.INVALID_DEVICEDATA_CASE_3);
-//        telemetryValidatorTask.process(envelopeMock, collectorMock, coordinatorMock);
-//        verify(collectorMock).send(argThat(validateOutputTopic(envelopeMock.getMessage(), FAILED_TOPIC)));
-//    }
-//
-//    @Test
-//    public void shouldSendEventToFaildTopicIfInvalidDeviceData_CASE4() throws Exception {
-//        stub(envelopeMock.getMessage()).toReturn(TelemetryV3.INVALID_DEVICEDATA_CASE_4);
-//        telemetryValidatorTask.process(envelopeMock, collectorMock, coordinatorMock);
-//        verify(collectorMock).send(argThat(validateOutputTopic(envelopeMock.getMessage(), SUCCESS_TOPIC)));
-//    }
-//
-//    @Test
-//    public void shouldSendEventToFaildTopicIfInvalidContentData() throws Exception {
-//        stub(envelopeMock.getMessage()).toReturn(TelemetryV3.INVALID_CONTENTDATA);
-//        telemetryValidatorTask.process(envelopeMock, collectorMock, coordinatorMock);
-//        verify(collectorMock).send(argThat(validateOutputTopic(envelopeMock.getMessage(), FAILED_TOPIC)));
-//    }
-//
-//    @Test
-//    public void shouldSendEventToFaildTopicIfInvalidDialCodeData() throws Exception {
-//        stub(envelopeMock.getMessage()).toReturn(TelemetryV3.INVALID_DIALCODEDATA);
-//        telemetryValidatorTask.process(envelopeMock, collectorMock, coordinatorMock);
-//        verify(collectorMock).send(argThat(validateOutputTopic(envelopeMock.getMessage(), FAILED_TOPIC)));
-//    }
-//
-//    @Test
-//    public void shouldSendEventToFaildTopicIfInvalidUserData() throws Exception {
-//        stub(envelopeMock.getMessage()).toReturn(TelemetryV3.INVALID_USERDATA);
-//        telemetryValidatorTask.process(envelopeMock, collectorMock, coordinatorMock);
-//        verify(collectorMock).send(argThat(validateOutputTopic(envelopeMock.getMessage(), FAILED_TOPIC)));
-//    }
 
     public ArgumentMatcher<OutgoingMessageEnvelope> validateOutputTopic(final Object message, final String stream) {
         return new ArgumentMatcher<OutgoingMessageEnvelope>() {

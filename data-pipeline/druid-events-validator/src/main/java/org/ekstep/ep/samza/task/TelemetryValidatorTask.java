@@ -41,15 +41,15 @@ public class TelemetryValidatorTask implements StreamTask, InitableTask, Windowa
     public TelemetryValidatorTask(Config config, TaskContext context) {
         init(config, context);
     }
-    
+
     public TelemetryValidatorTask() {
-    	
+
     }
 
     @Override
     public void init(Config config, TaskContext context) {
         this.config = new TelemetryValidatorConfig(config);
-        metrics = new JobMetrics(context,this.config.jobName());
+        metrics = new JobMetrics(context, this.config.jobName());
         service = new TelemetryValidatorService(this.config);
     }
 
@@ -59,7 +59,6 @@ public class TelemetryValidatorTask implements StreamTask, InitableTask, Windowa
         TelemetryValidatorSource source = new TelemetryValidatorSource(envelope);
         TelemetryValidatorSink sink = new TelemetryValidatorSink(collector, metrics, config);
         jsonSchemaFactory = JsonSchemaFactory.byDefault();
-        
         service.process(source, sink, jsonSchemaFactory);
     }
 

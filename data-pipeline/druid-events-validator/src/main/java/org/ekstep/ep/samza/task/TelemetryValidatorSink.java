@@ -6,14 +6,14 @@ import org.ekstep.ep.samza.core.JobMetrics;
 import org.ekstep.ep.samza.domain.Event;
 
 public class TelemetryValidatorSink extends BaseSink {
-    
+
     private JobMetrics metrics;
     private TelemetryValidatorConfig config;
 
     public TelemetryValidatorSink(MessageCollector collector, JobMetrics metrics,
                                   TelemetryValidatorConfig config) {
-        
-    	super(collector);
+
+        super(collector);
         this.metrics = metrics;
         this.config = config;
     }
@@ -24,14 +24,14 @@ public class TelemetryValidatorSink extends BaseSink {
     }
 
     public void toFailedTopic(Event event, String failedMessage) {
-    	event.markFailure(failedMessage, config);
-    	toTopic(config.failedTopic(), event.mid(), event.getJson());
+        event.markFailure(failedMessage, config);
+        toTopic(config.failedTopic(), event.mid(), event.getJson());
         metrics.incFailedCounter();
     }
 
     public void toErrorTopic(Event event, String errorMessage) {
-    	event.markFailure(errorMessage, config);
-    	toTopic(config.failedTopic(), event.mid(), event.getJson());
+        event.markFailure(errorMessage, config);
+        toTopic(config.failedTopic(), event.mid(), event.getJson());
         metrics.incErrorCounter();
     }
 

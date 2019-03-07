@@ -48,7 +48,6 @@ public class TelemetryValidatorService {
             if (report.isSuccess()) {
                 LOGGER.info("VALIDATION SUCCESS", event.mid());
                 event.markSuccess();
-                event.updateDefaults(config);
                 sink.toSuccessTopic(event);
             } else {
                 String fieldName = this.getInvalidFieldName(report.toString());
@@ -56,7 +55,6 @@ public class TelemetryValidatorService {
                 sink.toFailedTopic(event, "Invalid field:" + fieldName);
             }
         } catch (JsonSyntaxException e) {
-            System.out.println("Catch error" + e);
             LOGGER.error(null, "INVALID EVENT: " + source.getMessage());
             sink.toMalformedEventsTopic(source.getMessage());
         } catch (Exception e) {

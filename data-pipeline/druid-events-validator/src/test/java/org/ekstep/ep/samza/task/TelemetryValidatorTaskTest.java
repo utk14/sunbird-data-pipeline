@@ -52,10 +52,8 @@ public class TelemetryValidatorTaskTest {
         when(configMock.get("output.malformed.topic.name", MALFORMED_TOPIC)).thenReturn(MALFORMED_TOPIC);
         when(configMock.get("telemetry.schema.path", TELEMETRY_SCHEMA_PATH)).thenReturn(TELEMETRY_SCHEMA_PATH);
         when(configMock.get("summary.schema.path", SUMMARY_SCHEMA_PATH)).thenReturn(SUMMARY_SCHEMA_PATH);
-        when(configMock.get("default.channel", "org.sunbird")).thenReturn("org.sunbird");
         when(metricsRegistry.newCounter(anyString(), anyString())).thenReturn(counter);
         when(contextMock.getMetricsRegistry()).thenReturn(metricsRegistry);
-        //System.out.println("configMock.get(\"telemetry.schema.path\");" + configMock.get("output.success.topic.name"));
         telemetryValidatorTask = new TelemetryValidatorTask(configMock, contextMock);
     }
 

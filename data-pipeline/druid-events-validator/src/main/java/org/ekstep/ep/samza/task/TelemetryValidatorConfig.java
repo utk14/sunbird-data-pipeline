@@ -11,7 +11,6 @@ public class TelemetryValidatorConfig {
     private String successTopic;
     private String failedTopic;
     private String malformedTopic;
-    private String defaultChannel;
     private String metricsTopic;
 
     public TelemetryValidatorConfig(Config config) {
@@ -19,10 +18,8 @@ public class TelemetryValidatorConfig {
         failedTopic = config.get("output.failed.topic.name", "telemetry.failed");
         malformedTopic = config.get("output.malformed.topic.name", "telemetry.malformed");
         metricsTopic = config.get("output.metrics.topic.name", "telemetry.pipeline_metrics");
-        defaultChannel = config.get("default.channel", "org.sunbird");
         telemetrySchemaPath = config.get("telemetry.schema.path", "src/main/resources/schemas/telemetry");
         summarySchemaPath = config.get("summary.schema.path", "src/main/resources/schemas/summary");
-
     }
 
     public String successTopic() {
@@ -39,10 +36,6 @@ public class TelemetryValidatorConfig {
 
     public String metricsTopic() {
         return metricsTopic;
-    }
-
-    public String defaultChannel() {
-        return defaultChannel;
     }
 
     public String telemetrySchemaPath() { return telemetrySchemaPath; }

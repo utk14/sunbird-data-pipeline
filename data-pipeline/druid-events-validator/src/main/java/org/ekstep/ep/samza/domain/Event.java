@@ -102,29 +102,6 @@ public class Event {
         telemetry.add("flags.dv_skipped", true);
     }
 
-    public void updateDefaults(TelemetryValidatorConfig config) {
-        String channelString = telemetry.<String>read("context.channel").value();
-        String channel = StringUtils.deleteWhitespace(channelString);
-        if (channel == null || channel.isEmpty()) {
-            telemetry.addFieldIfAbsent("context", new HashMap<String, Object>());
-            telemetry.add("context.channel", config.defaultChannel());
-        }
-        String atTimestamp = telemetry.getAtTimestamp();
-        String strSyncts = telemetry.getSyncts();
-        if (null == atTimestamp && null == strSyncts) {
-            long syncts = System.currentTimeMillis();
-            telemetry.addFieldIfAbsent("syncts", syncts);
-            telemetry.addFieldIfAbsent("@timestamp", df.print(syncts));
-        } else {
-            if (atTimestamp != null) {
-                telemetry.addFieldIfAbsent("syncts", df.parseMillis(atTimestamp));
-            } else if (strSyncts != null) {
-                telemetry.addFieldIfAbsent("@timestamp", strSyncts);
-            }
-        }
-
-    }
-
     public boolean isSummaryEvent() {
         NullableValue<String> eid = telemetry.read("eid");
         return (!eid.isNull() && eid.value().startsWith("ME_"));
