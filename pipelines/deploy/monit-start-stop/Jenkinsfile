@@ -35,8 +35,6 @@ node() {
     catch (err) {
         throw err
     }
-<<<<<<< HEAD
 }
-=======
 }
->>>>>>> Issue #000 feat: added monit deploy jenkinsfile
+
