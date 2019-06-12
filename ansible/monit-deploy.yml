@@ -38,6 +38,6 @@
   become: yes
   name: Installing and configuring monit
   roles:
-    - { role: monit, service: 'monit_channel-telemetry-backup,monit_derived-telemetry-backup,monit_raw-telemetry-backup,monit_learning-events-backup,monit_ingestion-telemetry-backup,monit_unique-telemetry-backup,monit_failed-telemetry-backup,' }
+    - { role: monit, service: 'monit_channel-telemetry-backup,monit_derived-telemetry-backup,monit_raw-telemetry-backup,monit_learning-events-backup,monit_ingestion-telemetry-backup,monit_unique-telemetry-backup,monit_failed-telemetry-backup' }
   tags: secor
 
