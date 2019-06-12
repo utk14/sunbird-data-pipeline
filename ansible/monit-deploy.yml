@@ -32,7 +32,7 @@
   name: Installing and configuring monit
   roles:
     - { role: monit, service: 'monit_kibana' }
-  tags: influxdb
+  tags: kibana
 
 - hosts: secor
   become: yes
