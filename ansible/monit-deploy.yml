@@ -4,7 +4,7 @@
     - ['{{inventory_dir}}/secrets.yml']
   name: Installing and configuring monit
   roles:
-    - { role: monit-deploy, service: 'monit_logstash_ep' }
+    - { role: monit, service: 'monit_logstash_ep' }
   tags: kafka-indexer
 
 
@@ -14,7 +14,7 @@
     - ['{{inventory_dir}}/secrets.yml']
   name: Installing and configuring monit
   roles:
-    - { role: monit-deploy, service: 'monit_api-service' }
+    - { role: monit, service: 'monit_api-service' }
   tags: analytics-api
 
 - hosts: cassandra
@@ -23,7 +23,7 @@
     - ['{{inventory_dir}}/secrets.yml']
   name: Installing and configuring monit
   roles:
-    - { role: monit-deploy, service: 'monit_cassandra-dp' }
+    - { role: monit, service: 'monit_cassandra-dp' }
   tags: cassandra
 
 - hosts: influxdb
@@ -32,7 +32,7 @@
     - ['{{inventory_dir}}/secrets.yml']
   name: Installing and configuring monit
   roles:
-    - { role: monit-deploy, service: 'monit_influxdb' }
+    - { role: monit, service: 'monit_influxdb' }
   tags: influxdb
 
 - hosts: telemetry-search-cluster-kibana-node
@@ -41,7 +41,7 @@
     - ['{{inventory_dir}}/secrets.yml']
   name: Installing and configuring monit
   roles:
-    - { role: monit-deploy, service: 'monit_kibana' }
+    - { role: monit, service: 'monit_kibana' }
   tags: kibana
 
 - hosts: secor
@@ -50,6 +50,6 @@
     - ['{{inventory_dir}}/secrets.yml']
   name: Installing and configuring monit
   roles:
-    - { role: monit-deploy, service: 'monit_channel-telemetry-backup,monit_derived-telemetry-backup,monit_raw-telemetry-backup,monit_learning-events-backup,monit_ingestion-telemetry-backup,monit_unique-telemetry-backup,monit_failed-telemetry-backup' }
+    - { role: monit, service: 'monit_channel-telemetry-backup,monit_derived-telemetry-backup,monit_raw-telemetry-backup,monit_learning-events-backup,monit_ingestion-telemetry-backup,monit_unique-telemetry-backup,monit_failed-telemetry-backup' }
   tags: secor
 
