@@ -43,8 +43,8 @@ monit_zookeeper:
 
 monit_logstash_ep:
   app_name: logstash
-  custom_start: service start logstash
-  custom_stop: service stop logstash
+  custom_start: "/usr/sbin/service logstash start"
+  custom_stop: "/usr/sbin/service logstash stop"
   retry: 3
 
 monit_api-service:
