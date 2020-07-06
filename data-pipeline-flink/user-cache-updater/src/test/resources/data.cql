@@ -109,3 +109,124 @@ CREATE INDEX inx_loc_code ON sunbird.location (code);
 INSERT INTO sunbird.location(id,code,name,type) VALUES ('location-1','ft0507020006', 'KARNATAKA', 'state');
 INSERT INTO sunbird.location(id,code,name,type) VALUES ('location-2','0f5f0702000f6', 'KARNATAKA', 'state');
 INSERT INTO sunbird.location(id,code,name,type) VALUES ('location-3','g0507020f00f6', 'TUMKUR', 'district');
+
+CREATE TABLE sunbird.user_org (
+    id text PRIMARY KEY,
+    addedby text,
+    addedbyname text,
+    approvaldate text,
+    approvedby text,
+    hashtagid text,
+    isapproved boolean,
+    isdeleted boolean,
+    isrejected boolean,
+    organisationid text,
+    orgjoindate text,
+    orgleftdate text,
+    position text,
+    roles list<text>,
+    updatedby text,
+    updateddate text,
+    userid text
+) WITH bloom_filter_fp_chance = 0.01
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'NONE'}
+    AND comment = ''
+    AND compaction = {'class': 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold': '32', 'min_threshold': '4'}
+    AND compression = {'chunk_length_in_kb': '64', 'class': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
+    AND dclocal_read_repair_chance = 0.1
+    AND default_time_to_live = 0
+    AND gc_grace_seconds = 864000
+    AND max_index_interval = 2048
+    AND memtable_flush_period_in_ms = 0
+    AND min_index_interval = 128
+    AND read_repair_chance = 0.0
+    AND speculative_retry = '99PERCENTILE';
+CREATE INDEX inx_uorg_userid ON sunbird.user_org (userid);
+CREATE INDEX inx_uorg_orgid ON sunbird.user_org (organisationid);
+
+CREATE TABLE sunbird.organisation (
+    id text PRIMARY KEY,
+    addressid text,
+    approvedby text,
+    approveddate text,
+    channel text,
+    communityid text,
+    contactdetail text,
+    createdby text,
+    createddate text,
+    datetime timestamp,
+    description text,
+    email text,
+    externalid text,
+    hashtagid text,
+    homeurl text,
+    imgurl text,
+    isapproved boolean,
+    isdefault boolean,
+    isrootorg boolean,
+    isssoenabled boolean,
+    keys map<text, frozen<list<text>>>,
+    locationid text,
+    locationids list<text>,
+    noofmembers int,
+    orgcode text,
+    orgname text,
+    orgtype text,
+    orgtypeid text,
+    parentorgid text,
+    preferredlanguage text,
+    provider text,
+    rootorgid text,
+    slug text,
+    status int,
+    theme text,
+    thumbnail text,
+    updatedby text,
+    updateddate text
+) WITH bloom_filter_fp_chance = 0.01
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'NONE'}
+    AND comment = ''
+    AND compaction = {'class': 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold': '32', 'min_threshold': '4'}
+    AND compression = {'chunk_length_in_kb': '64', 'class': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
+    AND dclocal_read_repair_chance = 0.1
+    AND default_time_to_live = 0
+    AND gc_grace_seconds = 864000
+    AND max_index_interval = 2048
+    AND memtable_flush_period_in_ms = 0
+    AND min_index_interval = 128
+    AND read_repair_chance = 0.0
+    AND speculative_retry = '99PERCENTILE';
+
+
+CREATE TABLE sunbird.usr_external_identity (
+    userid text,
+    idtype text,
+    provider text,
+    createdby text,
+    createdon timestamp,
+    externalid text,
+    lastupdatedby text,
+    lastupdatedon timestamp,
+    originalexternalid text,
+    originalidtype text,
+    originalprovider text,
+    PRIMARY KEY (userid, idtype, provider)
+) WITH CLUSTERING ORDER BY (idtype ASC, provider ASC)
+    AND bloom_filter_fp_chance = 0.01
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'NONE'}
+    AND comment = ''
+    AND compaction = {'class': 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy', 'max_threshold': '32', 'min_threshold': '4'}
+    AND compression = {'chunk_length_in_kb': '64', 'class': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
+    AND dclocal_read_repair_chance = 0.1
+    AND default_time_to_live = 0
+    AND gc_grace_seconds = 864000
+    AND max_index_interval = 2048
+    AND memtable_flush_period_in_ms = 0
+    AND min_index_interval = 128
+    AND read_repair_chance = 0.0
+    AND speculative_retry = '99PERCENTILE';
+
+

@@ -1,10 +1,11 @@
 package org.sunbird.dp.usercache.functions
 
 import java.util
+import java.util.Collections
+import com.google.gson.Gson
 
 import com.datastax.driver.core.Row
 import com.datastax.driver.core.querybuilder.{Clause, QueryBuilder}
-import com.google.gson.Gson
 import org.apache.flink.api.common.typeinfo.TypeInformation
 import org.apache.flink.configuration.Configuration
 import org.apache.flink.streaming.api.functions.ProcessFunction
@@ -15,8 +16,9 @@ import org.sunbird.dp.core.util.CassandraUtil
 import org.sunbird.dp.usercache.domain.Event
 import org.sunbird.dp.usercache.task.UserCacheUpdaterConfig
 
-import scala.collection.JavaConverters._
 import scala.collection.mutable
+import scala.collection.JavaConverters._
+
 
 class UserCacheUpdaterFunction(config: UserCacheUpdaterConfig)(implicit val mapTypeInfo: TypeInformation[Event])
   extends BaseProcessFunction[Event, Event](config) {
@@ -24,6 +26,7 @@ class UserCacheUpdaterFunction(config: UserCacheUpdaterConfig)(implicit val mapT
   private[this] val logger = LoggerFactory.getLogger(classOf[UserCacheUpdaterFunction])
   private var dataCache: DataCache = _
   private var cassandraConnect: CassandraUtil = _
+  val gson = new Gson()
 
   override def metricsList(): List[String] = {
     List(config.dbReadSuccessCount, config.dbReadMissCount, config.userCacheHit, config.skipCount, config.successCount, config.totalEventsCount)
@@ -55,7 +58,13 @@ class UserCacheUpdaterFunction(config: UserCacheUpdaterConfig)(implicit val mapT
           }
         }
         if (!userData.isEmpty) {
-          dataCache.setWithRetry(id, new Gson().toJson(mapAsJavaMap(userData)))
+          println("userdata: " + userData)
+          val redisData = userData.filter{f => (null != f._2)}
+          val data = redisData.map(f => (f._1, f._2.toString))
+          println("data: " + data)
+          val filteredData = mapAsJavaMap(data)
+          filteredData.values().removeAll(Collections.singleton({}))
+          dataCache.hmSet(id, filteredData)
           metrics.incCounter(config.successCount)
           metrics.incCounter(config.userCacheHit)
         } else {
@@ -88,7 +97,13 @@ class UserCacheUpdaterFunction(config: UserCacheUpdaterConfig)(implicit val mapT
    */
 
   def updateAction(userId: String, event: Event, metrics: Metrics): mutable.Map[String, AnyRef] = {
-    val userCacheData: mutable.Map[String, AnyRef] = dataCache.getWithRetry(userId)
+//    println("event: " + event)
+//    println("userid: " + userId)
+    val userCacheData: mutable.Map[String, String] = dataCache.hgetAllWithRetry(userId)
+    println("usercachedata: " + userCacheData)
+
+    val custodianRootOrgId = getCustodianRootOrgId(metrics)
+
 
     Option(event.getContextDataId(cDataType = "UserRole")).map(loginType => {
       userCacheData.put(config.userLoginTypeKey, loginType)
@@ -103,19 +118,22 @@ class UserCacheUpdaterFunction(config: UserCacheUpdaterConfig)(implicit val mapT
         QueryBuilder.eq("id", userId),
         metrics)
       ))
-
+//      val locationIds: Map[String, AnyRef] = gson.fromJson(gson.toJson(userDetails), new util.LinkedHashMap[String, AnyRef]().getClass)
+//      val locationIdList = locationIds.substring(1, locationIds.length - 1).split(",").toList
+//      val locationIdArr = new util.ArrayList[String](locationIdList)
+//    println("userDetails.get(\"locationids\") " + locationIds)
       // Fetching the location details from the cassandra table
-      val updatedUserDetails: mutable.Map[String, AnyRef] = userDetails.++(extractLocationMetaData(readFromCassandra(
-        keyspace = config.keySpace,
-        table = config.locationTable,
-        clause = QueryBuilder.in("id", userDetails.get("locationids").getOrElse(new util.ArrayList()).asInstanceOf[util.ArrayList[String]]),
-        metrics)
-      ))
+//      val updatedUserDetails: mutable.Map[String, AnyRef] = userDetails.++(extractLocationMetaData(readFromCassandra(
+//        keyspace = config.keySpace,
+//        table = config.locationTable,
+//        clause = QueryBuilder.in("id", userDetails.get("locationids").getOrElse(new util.ArrayList()).asInstanceOf[util.ArrayList[String]]),
+//        metrics)
+//      ))
       logger.info(s"User details ( $userId ) are fetched from the db's and updating the redis now.")
-      updatedUserDetails
+      userDetails
     } else {
       logger.info(s"Skipping the event update from databases since event Does not have user properties or user sigin in type is Anonymous ")
-      userCacheData
+      userCacheData.asInstanceOf[mutable.Map[String,AnyRef]]
     }
   }
 
@@ -157,4 +175,12 @@ class UserCacheUpdaterFunction(config: UserCacheUpdaterConfig)(implicit val mapT
     result
   }
 
+  def getCustodianRootOrgId(metrics: Metrics): Unit = {
+    readFromCassandra(
+      keyspace = config.keySpace,
+      table = config.userTable,
+      QueryBuilder.eq("id", "custodianRootOrgId"),
+      metrics
+    )
+  }
 }

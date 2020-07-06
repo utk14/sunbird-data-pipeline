@@ -71,8 +71,8 @@ class UserCacheUpdatetStreamTaskSpec extends BaseTestSpec {
 
 
     // Insert user test data
-    jedis.set("user-3", EventFixture.userCacheData3)
-    jedis.set("user-4", EventFixture.userCacheData4)
+    jedis.hmset("user-3", EventFixture.userCacheDataMap3)
+    jedis.hmset("user-4", EventFixture.userCacheDataMap4)
     jedis.close()
   }
 
@@ -101,10 +101,10 @@ class UserCacheUpdatetStreamTaskSpec extends BaseTestSpec {
      */
     jedis.select(userCacheConfig.userStore)
 
-    val ssoUser = jedis.get("user-1")
+    val ssoUser = jedis.hgetAll("user-1")
     ssoUser should not be (null)
-    val ssoUserMap: util.Map[String, AnyRef] = gson.fromJson(ssoUser, new util.LinkedHashMap[String, AnyRef]().getClass)
-    ssoUserMap.get("usersignintype") should be("Validated")
+//    val ssoUserMap: util.Map[String, AnyRef] = gson.fromJson(ssoUser, new util.LinkedHashMap[String, AnyRef]().getClass)
+    ssoUser.get("usersignintype") should be("Validated")
 
     /**
      * UserId = user-2
@@ -112,34 +112,34 @@ class UserCacheUpdatetStreamTaskSpec extends BaseTestSpec {
      * User SignupType is "google"
      * It should able to insert The Map(usersignintype, Self-Signed-In)
      */
-    val googleUser = jedis.get("user-2")
+    val googleUser = jedis.hgetAll("user-2")
     googleUser should not be (null)
-    val googleUserMap: util.Map[String, AnyRef] = gson.fromJson(googleUser, new util.LinkedHashMap[String, AnyRef]().getClass)
-    googleUserMap.get("usersignintype") should be("Self-Signed-In")
+//    val googleUserMap: util.Map[String, AnyRef] = gson.fromJson(googleUser, new util.LinkedHashMap[String, AnyRef]().getClass)
+    googleUser.get("usersignintype") should be("Self-Signed-In")
 
 
     // When action is Update and location id's are empty
 
-    val userInfo = jedis.get("user-3")
-    val userInfoMap: util.Map[String, AnyRef] = gson.fromJson(userInfo, new util.LinkedHashMap[String, AnyRef]().getClass)
-    userInfoMap.get("createdby") should be("MANJU")
-    userInfoMap.get("location") should be("Banglore")
-    userInfoMap.get("maskedphone") should be("******181")
+    val userInfo = jedis.hgetAll("user-3")
+//    val userInfoMap: util.Map[String, AnyRef] = gson.fromJson(userInfo, new util.LinkedHashMap[String, AnyRef]().getClass)
+    userInfo.get("createdby") should be("MANJU")
+//    userInfo.get("location") should be("Banglore")
+    userInfo.get("maskedphone") should be("******181")
 
     // When action is Updated and location ids are present
-    val locationInfo = jedis.get("user-4")
-    val locationInfoMap: util.Map[String, AnyRef] = gson.fromJson(locationInfo, new util.LinkedHashMap[String, AnyRef]().getClass)
+//    val locationInfo = jedis.get("user-4")
+//    val locationInfoMap: util.Map[String, AnyRef] = gson.fromJson(locationInfo, new util.LinkedHashMap[String, AnyRef]().getClass)
 
     // Initially, in the redis for the user-4 is loaded with location details
     // State - Telangana & District - Hyderabad
     // Now it should be bellow assertions
-    locationInfoMap.get("state") should be("KARNATAKA")
-    locationInfoMap.get("district") should be("TUMKUR")
-
-
-    val emptyProps = jedis.get("user-5")
-    val emptyPropsMap: util.Map[String, AnyRef] = gson.fromJson(emptyProps, new util.LinkedHashMap[String, AnyRef]().getClass)
-    emptyPropsMap.get(userCacheConfig.userLoginTypeKey) should be("25cb0530-7c52-ecb1-cff2-6a14faab7910")
+//    locationInfoMap.get("state") should be("KARNATAKA")
+//    locationInfoMap.get("district") should be("TUMKUR")
+//
+//
+//    val emptyProps = jedis.get("user-5")
+//    val emptyPropsMap: util.Map[String, AnyRef] = gson.fromJson(emptyProps, new util.LinkedHashMap[String, AnyRef]().getClass)
+//    emptyPropsMap.get(userCacheConfig.userLoginTypeKey) should be("25cb0530-7c52-ecb1-cff2-6a14faab7910")
 
   }
 
