@@ -43,25 +43,35 @@ class UserCacheUpdaterFunctionV2(config: UserCacheUpdaterConfigV2)(implicit val 
 
   override def processElement(event: Event, context: ProcessFunction[Event, Event]#Context, metrics: Metrics): Unit = {
     metrics.incCounter(config.totalEventsCount)
-    Option(event.getId).map(id => {
-      Option(event.getState).map(name => {
-        val userData: mutable.Map[String, AnyRef] = name.toUpperCase match {
-          case "CREATE" | "CREATED" | "UPDATE" | "UPDATED" => UserMetadataUpdater.execute(id, event, metrics, config, dataCache, cassandraConnect, custodianOrgId)
-          case _ => {
-            logger.info(s"Invalid event state name either it should be(Create/Created/Update/Updated) but found $name for ${event.mid()}")
-            metrics.incCounter(config.skipCount)
-            mutable.Map[String, AnyRef]()
+    val userId = event.getId
+    if (null !=  userId) {
+      Option(userId).map(id => {
+        Option(event.getState).map(name => {
+          val userData: mutable.Map[String, AnyRef] = name.toUpperCase match {
+            case "CREATE" | "CREATED" | "UPDATE" | "UPDATED" => {
+              logger.info(s"Processing event with mid ${event.mid()}")
+              UserMetadataUpdater.execute(id, event, metrics, config, dataCache, cassandraConnect, custodianOrgId)
+            }
+            case _ => {
+              logger.info(s"Invalid event state name either it should be(Create/Created/Update/Updated) but found $name for ${event.mid()}")
+              metrics.incCounter(config.skipCount)
+              mutable.Map[String, AnyRef]()
+            }
           }
-        }
-        if (!userData.isEmpty) {
-          dataCache.hmSet(config.userStoreKeyPrefix + id, mapAsJavaMap(UserMetadataUpdater.stringify(userData)))
-          metrics.incCounter(config.successCount)
-          metrics.incCounter(config.userCacheHit)
-        } else {
-          metrics.incCounter(config.skipCount)
-        }
+          if (!userData.isEmpty) {
+            dataCache.hmSet(config.userStoreKeyPrefix + id, mapAsJavaMap(UserMetadataUpdater.stringify(userData)))
+            metrics.incCounter(config.successCount)
+            metrics.incCounter(config.userCacheHit)
+          } else {
+            metrics.incCounter(config.skipCount)
+          }
+        }).getOrElse(metrics.incCounter(config.skipCount))
       }).getOrElse(metrics.incCounter(config.skipCount))
-    }).getOrElse(metrics.incCounter(config.skipCount))
+    } else {
+      println("user id not present")
+      logger.info(s"User Id for the event is null for mid ${event.mid()}")
+      metrics.incCounter(config.skipCount)
+    }
   }
 
   def getCustodianRootOrgId(): String = {
