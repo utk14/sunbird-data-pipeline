@@ -54,6 +54,8 @@ class UserCacheUpdaterConfigV2(override val config: Config) extends BaseJobConfi
   val schoolUdiseCodeKey = "schooludisecode"
   val schoolNameKey = "schoolname"
   val userTypeKey = "usertype"
+  val `type` = "type"
+  val subtype = "subType"
   val userSubtypeKey = "usersubtype"
   val userId = "userid"
   val language = "language"
@@ -70,4 +72,5 @@ class UserCacheUpdaterConfigV2(override val config: Config) extends BaseJobConfi
 
   //User Read API
   val userReadApiUrl = config.getString("user-read.api.url")
+  val userReadApiFields = config.getString("user.read.url.fields")
 }
