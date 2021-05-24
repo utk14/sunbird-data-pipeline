@@ -13,6 +13,13 @@ object EventFixture {
       {"eid":"AUDIT","ets":1573121861118,"ver":"3.0","mid":"1573121861118.40f9136b-1cc3-458d-a04a-4459606df","actor":{"id":"5609876543234567890987654345678","type":"Request"},"context":{"channel":"01285019302823526477","pdata":{"id":"dev.sunbird.portal","pid":"learner-service","ver":"2.5.0"},"env":"User","did":"user-3","cdata":[{"id":"google","type":"SignupType"}],"rollup":{"l1":"01285019302823526477"}},"object":{"id":"user-1","type":"user"},"edata":{"state":"Update","props":["recoveryEmail","recoveryPhone","userId","id","externalIds","updatedDate","updatedBy"]},"syncts":1573121861125,"@timestamp":"2019-11-07T10:17:41.125Z","flags":{"tv_processed":true,"dd_processed":true},"type":"events","ts":"2019-11-07T10:17:41.118+0000"}
       |
       |""".stripMargin,
+
+    /**
+      * UserId: user-9
+      * Client_Error
+      */
+    """{"actor":{"id":"cb0defc7-9f5f-4c0a-bb73-207d34ed2cf0","type":"User"},"eid":"AUDIT","edata":{"state":"Update","type":"mergeUser","props":["fromAccountId","toAccountId","type"]},"ver":"3.0","syncts":1621593310099,"@timestamp":"2021-05-21T10:35:10.099Z","ets":1621593307552,"context":{"channel":"0126796199493140480","pdata":{"id":"preprod.diksha.learning.service","pid":"learner-service","ver":"3.9.0"},"env":"User","cdata":[{"id":"9e6f3392-af99-425b-9404-e8e4078a1b65","type":"FromAccountId"},{"id":"cb0defc7-9f5f-4c0a-bb73-207d34ed2cf0","type":"ToAccountId"},{"id":"8f0d93fd-33ac-4a64-a39c-f008011c976a","type":"Request"}],"rollup":{"l1":"01275678925675724817"}},"flags":{"pp_duplicate_skipped":true,"pp_validation_processed":true},"mid":"8f0d93fd-33ac-4a64-a39c-f008011c976a","type":"events","object":{"id":"user-8","type":"User"}}""",
+
     /**
       * User-Id : user-2
       * Edata.state is update
@@ -67,7 +74,7 @@ object EventFixture {
     """
       |
       |{"eid":"AUDIT","ets":1573121861118,"ver":"3.0","mid":"1573121861118.40f9136b-1cc3-458d-a04a-4459606df","actor":{"id":"5609876543234567890987654345678","type":"Request"},"context":{"channel":"01285019302823526477","pdata":{"id":"dev.sunbird.portal","pid":"learner-service","ver":"2.5.0"},"env":"User","did":"user-5","cdata":[{"id":"25cb0530-7c52-ecb1-cff2-6a14faab7910","type":"UserRole"}],"rollup":{"l1":"01285019302823526477"}},"object":{"id":"user-7","type":"user"},"edata":{"state":"wrongState"},"syncts":1573121861125,"@timestamp":"2019-11-07T10:17:41.125Z","flags":{"tv_processed":true,"dd_processed":true},"type":"events","ts":"2019-11-07T10:17:41.118+0000"}
-      |""".stripMargin
+      |""".stripMargin,
 
   )
 
